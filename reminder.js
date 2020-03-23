@@ -1,14 +1,18 @@
-'use strict';
-const line = require('@line/bot-sdk');
+"use strict";
+const line = require("@line/bot-sdk");
 
-const defaultAccessToken = 'CHANNEL_ACCESS_TOKEN';
-const defaultSecret = 'CHANNEL_SECRET';
-const defaultUserId = 'USER_ID';
+const defaultAccessToken = "CHANNEL_ACCESS_TOKEN";
+const defaultSecret = "CHANNEL_SECRET";
+const defaultUserId = "USER_ID";
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+console.log(process.env.CHANNEL_SECRET);
 // create LINE SDK config from env variables
 const config = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || defaultAccessToken,
-  channelSecret: process.env.CHANNEL_SECRET || defaultSecret,
+    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || defaultAccessToken,
+    channelSecret: process.env.CHANNEL_SECRET || defaultSecret
 };
 
 // create LINE SDK client
@@ -18,21 +22,23 @@ const client = new line.Client(config);
 const userId = process.env.USER_ID || defaultUserId;
 
 let message = [
-  {
-    type: "text",
-    text: "Hello world!"
-  },
-  {
-    type: "sticker",
-    packageId: "1",
-    stickerId: "410"
-  }
+    {
+        type: "text",
+        text: "Hello world!"
+    },
+    {
+        type: "sticker",
+        packageId: "1",
+        stickerId: "410"
+    }
 ];
 
 client
-  .pushMessage(userId, message)
-  .then(() => console.log({
-    success: true,
-    events: message
-  }))
-  .catch(err => console.log(err))
+    .pushMessage(userId, message)
+    .then(() =>
+        console.log({
+            success: true,
+            events: message
+        })
+    )
+    .catch(err => console.log(err));
